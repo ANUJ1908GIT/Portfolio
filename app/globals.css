@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+:root {
+  --black: #000000;
+  --surface: #07070f;
+  --glass: rgba(255,255,255,0.03);
+  --glass-border: rgba(255,255,255,0.07);
+  --blue: #3b82f6;
+  --blue-bright: #60a5fa;
+  --cyan: #22d3ee;
+  --purple: #a78bfa;
+  --purple-dark: #7c3aed;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: auto; overflow-x: clip; }
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: clip;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.cursor-hover #cursor {
+  transform: translate(-50%,-50%) scale(3.5) !important;
+}
+
+/* ── Noise ── */
+.noise-overlay {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px;
+  animation: noiseShift 8s steps(10) infinite;
+}
+@keyframes noiseShift { to { background-position: 100px 50px; } }
+
+.vignette-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.45) 100%);
+}
+
+/* ── Grid ── */
+.grid-overlay {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.012) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 72%);
+}
+
+/* ── Aurora ── */
+.aurora {
+  position: fixed; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+  animation: auroraDrift 22s ease-in-out infinite;
+}
+.aurora-1 {
+  width: 900px; height: 900px;
+  background: radial-gradient(circle, rgba(59,130,246,0.10), transparent 70%);
+  top: -35%; right: -15%; animation-delay: 0s;
+}
+.aurora-2 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(167,139,250,0.09), transparent 70%);
+  bottom: -25%; left: -15%; animation-delay: -8s;
+}
+.aurora-3 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(34,211,238,0.06), transparent 70%);
+  top: 45%; left: 38%; animation-delay: -16s;
+}
+@keyframes auroraDrift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(50px,-35px) scale(1.08); }
+  66%      { transform: translate(-35px,55px) scale(0.94); }
+}
+
+/* ── Orbit ── */
+@keyframes orbitSpin   { from { transform: rotate(0deg); }   to { transform: rotate(360deg); }  }
+@keyframes counterSpin { from { transform: rotate(0deg); }   to { transform: rotate(-360deg); } }
+
+/* ── Scroll pulse ── */
+@keyframes scrollPulse {
+  0%,100% { transform: scaleY(1); opacity: 1; }
+  50%      { transform: scaleY(0.4); opacity: 0.2; }
+}
+
+@keyframes travelPulse {
+  0%   { top: -6%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes shimmerSweep {
+  0%   { transform: translateX(-60%) translateY(-60%) rotate(25deg); }
+  100% { transform: translateX(60%) translateY(60%) rotate(25deg); }
+}
+
+/* ── Gradient text ── */
+.gradient-text {
+  background: linear-gradient(135deg, #60a5fa, #a78bfa, #22d3ee);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-blue {
+  background: linear-gradient(135deg, #22d3ee, #3b82f6);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glass ── */
+.glass-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ── Section label ── */
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.28em;
+  text-transform: uppercase; color: #3b82f6;
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.section-label::before {
+  content: ''; width: 1.8rem; height: 1px;
+  background: #3b82f6; flex-shrink: 0;
+}
+
+/* ── Page container ── */
+.page-container {
+  width: 100%;
+  max-width: min(1760px, 96vw);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+/* ── Reveal ── */
+.reveal-up { opacity: 0; transform: perspective(1000px) translateY(50px) translateZ(-120px) rotateX(18deg); transform-origin: bottom center; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+::selection {
+  background: rgba(124, 58, 237, 0.35);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(96, 165, 250, 0.6);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Header scroll state ── */
+#main-header.scrolled {
+  background: rgba(0,0,0,0.8) !important;
+  backdrop-filter: blur(28px) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+/* ── Divider ── */
+.section-divider {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  margin: 0;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+  .page-container { padding: 0 5vw; }
+}
+
+@media (pointer: coarse) {
+  body, a, button { cursor: auto !important; }
+  #cursor { display: none !important; }
+}
+
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+  .page-container { padding: 0 5vw; }
+
+  /* Aurora: smaller + lighter blur so mobile GPUs aren't pushing full desktop-size blur circles */
+  .aurora { filter: blur(60px); }
+  .aurora-1 { width: 420px; height: 420px; }
+  .aurora-2 { width: 340px; height: 340px; }
+  .aurora-3 { width: 280px; height: 280px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
