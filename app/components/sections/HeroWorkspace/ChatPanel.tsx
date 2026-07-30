@@ -296,7 +296,6 @@ maxHeight:  "min(560px, calc(100vh - 120px))",
               flex: 1, background: "none", border: "none", outline: "none", resize: "none",
               fontFamily: "'Space Grotesk', 'Inter', sans-serif", fontSize: 13,
               color: "rgba(255,255,255,0.85)", lineHeight: 1.5,
-              placeholder: "color: rgba(255,255,255,0.25)",
               maxHeight: 96, overflowY: "auto",
               scrollbarWidth: "none",
             }}
@@ -307,7 +306,7 @@ maxHeight:  "min(560px, calc(100vh - 120px))",
             }}
           />
           <button
-            onClick={send}
+            onClick={() => send()}
             disabled={!input.trim() || loading}
             style={{
               width: 32, height: 32, borderRadius: 8, flexShrink: 0,

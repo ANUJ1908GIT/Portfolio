@@ -80,10 +80,15 @@ function ToolIcon({ icon: Icon, label, color }: { icon: React.ElementType | "fig
         onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px) scale(1.05)"; }}
         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0) scale(1)"; }}
       >
-        {isFigma ? <FigmaLogo size={22} />
-          : isCanva ? <CanvaLogo size={26} />
-          : isMicrosoft ? <MicrosoftLogo size={22} />
-          : <Icon size={26} color="#fff" />}
+        {isFigma ? (
+          <FigmaLogo size={22} />
+        ) : isCanva ? (
+          <CanvaLogo size={26} />
+        ) : isMicrosoft ? (
+          <MicrosoftLogo size={22} />
+        ) : typeof Icon !== "string" ? (
+          <Icon size={26} color="#fff" />
+        ) : null}
       </div>
       <span style={{
         fontFamily: "'Space Mono', monospace", fontSize: "0.6rem",

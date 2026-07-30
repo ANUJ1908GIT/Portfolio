@@ -7,10 +7,9 @@ import { achievements } from "@/lib/data";
 
 const palette = ["#60a5fa", "#a78bfa", "#22d3ee", "#f472b6", "#34d399", "#fb923c"];
 
-// Maps each achievement's emoji to a matching lucide icon - used as a
-// fallback if the logo image fails to load, and also as the base language
-// for icon rendering.
-const iconMap: Record<string, React.ElementType> = {
+type IconComponent = React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
+
+const iconMap: Record<string, IconComponent> = {
   "🏆": Trophy,
   "⚡": Zap,
   "⭐": Star,
